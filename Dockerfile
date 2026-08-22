@@ -18,4 +18,4 @@ RUN yarn run build
 
 EXPOSE 9000
 
-CMD ["sh", "-c", "yarn medusa db:migrate && yarn start"]
+CMD ["yarn", "workspace", "@dtc/backend", "start"]
