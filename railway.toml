@@ -1,0 +1,6 @@
+[build]
+builder = "NIXPACKS"
+buildCommand = "yarn install && yarn workspace @dtc/backend build"
+
+[deploy]
+startCommand = "yarn workspace @dtc/backend start"
