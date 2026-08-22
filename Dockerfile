@@ -10,7 +10,7 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn workspace @dtc/backend build
+RUN yarn workspace @dtc/backend exec medusa build
 
 EXPOSE 9000
 
