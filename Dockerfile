@@ -2,19 +2,19 @@ FROM node:20
 
 WORKDIR /app
 
-# Copy project files
-COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn ./.yarn
-COPY apps ./apps
-
-# Enable Yarn
 RUN corepack enable
 
-# Install dependencies
+COPY package.json yarn.lock .yarnrc.yml ./
+
+COPY apps/backend/package.json ./apps/backend/package.json
+COPY apps/storefront/package.json ./apps/storefront/package.json
+
 RUN yarn install
 
-# Build Medusa backend
+COPY . .
+
 WORKDIR /app/apps/backend
+
 RUN yarn run build
 
 EXPOSE 9000
