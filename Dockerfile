@@ -6,8 +6,6 @@ RUN corepack enable && corepack prepare yarn@3.2.1 --activate
 
 COPY package.json yarn.lock .yarnrc.yml ./
 
-COPY .yarn ./.yarn
-
 RUN yarn install
 
 COPY . .
