@@ -10,8 +10,8 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn workspace @dtc/backend exec medusa build
+RUN yarn workspace @dtc/backend run build
 
 EXPOSE 9000
 
-CMD ["yarn", "workspace", "@dtc/backend", "start"]
+CMD ["yarn", "workspace", "@dtc/backend", "run", "start"]
