@@ -7,7 +7,6 @@ RUN corepack enable
 COPY package.json yarn.lock .yarnrc.yml ./
 
 COPY apps/backend/package.json ./apps/backend/package.json
-
 COPY apps/storefront/package.json ./apps/storefront/package.json
 
 RUN yarn install
@@ -16,7 +15,10 @@ COPY . .
 
 WORKDIR /app/apps/storefront
 
+ARG NEXT_PUBLIC_MEDUSA_BACKEND_URL
 ARG NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
+
+ENV NEXT_PUBLIC_MEDUSA_BACKEND_URL=$NEXT_PUBLIC_MEDUSA_BACKEND_URL
 ENV NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=$NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
 
 RUN yarn run build
