@@ -18,10 +18,6 @@ WORKDIR /app/apps/backend
 
 RUN yarn build
 
-WORKDIR /app/apps/backend/.medusa/server
-
-RUN yarn install
-
 EXPOSE 9000
 
 CMD ["yarn", "start"]
