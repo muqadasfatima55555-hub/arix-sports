@@ -3,4 +3,4 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile.backend"
 
 [deploy]
-startCommand = "yarn workspace @dtc/backend start"
+startCommand = "cd /app/apps/backend/.medusa/server && yarn start"
