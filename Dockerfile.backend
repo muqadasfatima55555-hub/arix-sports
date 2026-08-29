@@ -2,21 +2,29 @@ FROM node:20
 
 WORKDIR /app
 
+# Enable and activate the exact Yarn version used by the project
 RUN corepack enable
+RUN corepack prepare yarn@3.2.1 --activate
 
+# Copy dependency files
 COPY package.json yarn.lock .yarnrc.yml ./
 
+# Copy workspace package files
 COPY apps/backend/package.json ./apps/backend/package.json
 COPY apps/storefront/package.json ./apps/storefront/package.json
 
+# Install dependencies
 RUN yarn install
 
+# Copy complete project
 COPY . .
 
+# Build backend
 WORKDIR /app/apps/backend
+RUN yarn build
 
-RUN yarn run build
-
+# Medusa default port
 EXPOSE 9000
 
+# Start backend
 CMD ["yarn", "workspace", "@dtc/backend", "start"]
