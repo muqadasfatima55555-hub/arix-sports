@@ -1,6 +1,0 @@
-[build]
-builder = "DOCKERFILE"
-dockerfilePath = "Dockerfile.storefront"
-
-[deploy]
-startCommand = "yarn workspace @dtc/storefront start"
