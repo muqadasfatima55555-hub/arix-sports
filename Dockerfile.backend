@@ -18,6 +18,9 @@ WORKDIR /app/apps/backend
 
 RUN yarn build
 
+RUN ls -la .medusa/server
+RUN ls -la .medusa/server/public/admin
+
 EXPOSE 9000
 
-CMD ["yarn", "start"]
+CMD ["node", ".medusa/server/index.js"]
