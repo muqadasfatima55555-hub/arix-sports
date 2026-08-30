@@ -1,7 +1,6 @@
 import { getLocaleHeader } from "@lib/util/get-locale-header"
-import Medusa, { FetchArgs, FetchInput } from "@medusajs/js-sdk"
+import Medusa from "@medusajs/js-sdk"
 
-// Defaults to standard port for Medusa server
 let MEDUSA_BACKEND_URL = "http://localhost:9000"
 
 if (process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL) {
@@ -17,23 +16,24 @@ export const sdk = new Medusa({
 const originalFetch = sdk.client.fetch.bind(sdk.client)
 
 sdk.client.fetch = async <T>(
-  input: FetchInput,
-  init?: FetchArgs
+  input: any,
+  init?: any
 ): Promise<T> => {
-  const headers = init?.headers ?? {}
-  let localeHeader: Record<string, string | null> | undefined
+  const headers = new Headers(init?.headers)
+
   try {
-    localeHeader = await getLocaleHeader()
-    headers["x-medusa-locale"] ??= localeHeader["x-medusa-locale"]
+    const localeHeader = await getLocaleHeader()
+
+    if (localeHeader["x-medusa-locale"]) {
+      headers.set(
+        "x-medusa-locale",
+        localeHeader["x-medusa-locale"]
+      )
+    }
   } catch {}
 
-  const newHeaders = {
-    ...localeHeader,
-    ...headers,
-  }
-  init = {
+  return originalFetch(input, {
     ...init,
-    headers: newHeaders,
-  }
-  return originalFetch(input, init)
+    headers,
+  })
 }
