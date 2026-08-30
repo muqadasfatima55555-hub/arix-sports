@@ -17,8 +17,6 @@ RUN yarn build
 
 WORKDIR /server/apps/backend/.medusa/server
 
-RUN yarn install
-
 EXPOSE 9000
 
 CMD ["yarn", "start"]
