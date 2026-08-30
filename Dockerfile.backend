@@ -1,6 +1,6 @@
 FROM node:20
 
-WORKDIR /app
+WORKDIR /server
 
 RUN corepack enable && corepack prepare yarn@3.2.1 --activate
 
@@ -11,9 +11,16 @@ RUN yarn install
 
 COPY . .
 
-WORKDIR /app/apps/backend
+WORKDIR /server/apps/backend
 
-RUN yarn workspace @dtc/backend build
+RUN yarn build
+
+WORKDIR /server/apps/backend/.medusa/server
+
+RUN touch yarn.lock
+RUN yarn install
+
+ENV NODE_ENV=production
 
 EXPOSE 9000
 
