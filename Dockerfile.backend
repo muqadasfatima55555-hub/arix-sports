@@ -1,6 +1,6 @@
 FROM node:20
 
-WORKDIR /app
+WORKDIR /server
 
 RUN corepack enable && corepack prepare yarn@3.2.1 --activate
 
@@ -11,10 +11,14 @@ RUN yarn install
 
 COPY . .
 
-WORKDIR /app/apps/backend
+WORKDIR /server/apps/backend
 
 RUN yarn build
 
+WORKDIR /server/apps/backend/.medusa/server
+
+RUN yarn install
+
 EXPOSE 9000
 
-CMD ["sh", "-c", "ls -la .medusa/server/public/admin && ls -la .medusa/server/public/admin/index.html && node .medusa/server/index.js"]
+CMD ["yarn", "start"]
