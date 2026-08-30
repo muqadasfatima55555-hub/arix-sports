@@ -11,8 +11,10 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn workspace @dtc/backend build
+WORKDIR /app/apps/backend
+
+RUN yarn build
 
 EXPOSE 9000
 
-CMD ["yarn", "workspace", "@dtc/backend", "start"]
+CMD ["sh", "-c", "ls -la .medusa/server/public/admin && ls -la .medusa/server/public/admin/index.html && node .medusa/server/index.js"]
